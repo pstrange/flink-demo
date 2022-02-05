@@ -1,0 +1,17 @@
+ext{
+    netflink = [
+            versionCode:  100,
+            versionName:  "0.1.0",
+            appName:      "NetFlink",
+            configsName:  "NetFlinkPreferences",
+            envName:      [debug:   "quality",
+                           staging: "staging",
+                           release: "production"],
+            apiHost:      [debug:   "https://api.themoviedb.org/",
+                           staging: "https://api.themoviedb.org/",
+                           release: "https://api.themoviedb.org/"],
+            apiKey:       [debug:   "1865f43a0549ca50d341dd9ab8b29f49",
+                           staging: "1865f43a0549ca50d341dd9ab8b29f49",
+                           release: "1865f43a0549ca50d341dd9ab8b29f49"],
+    ]
+}
