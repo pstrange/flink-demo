@@ -13,7 +13,7 @@ class SplashViewModel(private val repository: Repository) : BaseViewModel() {
     val session = MutableLiveData<GuestSession?>()
 
     fun authenticate(){
-        dispatch(object: Dispatcher<Authentication>(){
+        dispatchWeb(object: WebDispatcher<Authentication>(){
             override suspend fun execute(): Response<Authentication> {
                 return repository.authenticate(BuildConfig.API_KEY)
             }
@@ -26,7 +26,7 @@ class SplashViewModel(private val repository: Repository) : BaseViewModel() {
     }
 
     private fun createSession(){
-        dispatch(object: Dispatcher<GuestSession>(){
+        dispatchWeb(object: WebDispatcher<GuestSession>(){
             override suspend fun execute(): Response<GuestSession> {
                 return repository.createSession(BuildConfig.API_KEY)
             }

@@ -1,6 +1,7 @@
 package com.flink.demo.view.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.flink.demo.R
@@ -32,6 +33,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     private val sessionObserver = Observer<GuestSession?> { auth ->
         binding.textView.text = Gson().toJson(auth)
+        startActivity(Intent(this, HomeActivity::class.java))
     }
 
     private val errorObserver = Observer<Error> { error ->

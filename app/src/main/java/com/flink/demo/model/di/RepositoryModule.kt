@@ -5,5 +5,7 @@ import com.flink.demo.model.repository.RepositoryImpl
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<Repository> { RepositoryImpl(service = get()) }
+    single<Repository> { RepositoryImpl(
+        local = get(),
+        service = get()) }
 }
