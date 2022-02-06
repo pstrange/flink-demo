@@ -1,6 +1,5 @@
 package com.flink.demo.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.flink.demo.BuildConfig
 import com.flink.demo.model.data.response.Movie
