@@ -16,10 +16,19 @@ class FavMoviesViewModel(private val repository: Repository) : BaseViewModel() {
     }
 
     private fun insertFavMovie(movie: Movie){
-        val favMovie = FavMovie(id = movie.id, movie = movie)
+        val favMovie = FavMovie(movieId = movie.id, movie = movie)
         dispatchDb(object : Dispatcher(){
             override suspend fun execute() {
                 repository.addFavorite(favMovie)
+            }
+        })
+    }
+
+    private fun deleteFavMovie(movie: Movie){
+        val favMovie = FavMovie(movieId = movie.id, movie = movie)
+        dispatchDb(object : Dispatcher(){
+            override suspend fun execute() {
+                repository.deleteFavorite(favMovie)
             }
         })
     }

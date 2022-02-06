@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "rateMoviesTable")
 data class RateMovie(
     @PrimaryKey(autoGenerate = false)
-    var id: Long? = null,
+    var movieId: Long? = null,
     @Embedded
     var movie: Movie? = null
 )

@@ -3,13 +3,13 @@
 
     <!-- drawable for selected tab -->
     <item
-        android:drawable="@drawable/circle_menu_selection"
+        android:drawable="@drawable/ic_action_home_filled"
         android:state_selected="true">
     </item>
 
     <!-- drawable for unselected tab -->
     <item
-        android:drawable="@drawable/ic_action_home_filled"
+        android:drawable="@drawable/circle_menu_selection"
         android:state_selected="false"/>
 
 </selector>
