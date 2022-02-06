@@ -1,33 +1,113 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
+
+def APP_NAME = "app_name"
+def VERSION_NAME = "version_name"
+def API_HOST = "API_HOST"
+def API_KEY = "API_KEY"
+def ENVIRONMENT = "ENVIRONMENT"
+def CONFIGS_NAME = "CONFIGS_NAME"
 
 android {
     compileSdk 31
+    flavorDimensions "default"
 
     defaultConfig {
         applicationId "com.flink.demo"
         minSdk 22
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
+    signingConfigs {
         release {
+            lintOptions {
+                checkReleaseBuilds false
+            }
+            setKeystoreSigningProperties(
+                    './signing.properties',
+                    android.signingConfigs.release)
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".quality"
+            debuggable true
+            manifestPlaceholders = [enableCrashReporting: "false"]
+        }
+        staging {
+            applicationIdSuffix ".staging"
+            debuggable true
+            manifestPlaceholders = [enableCrashReporting: "true"]
+        }
+        release {
+            debuggable false
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors.whenObjectAdded { flavor ->
+        def flavorData = rootProject.ext[flavor.name]
+        flavor.versionCode flavorData.versionCode
+        flavor.versionName flavorData.versionName
+    }
+
+    productFlavors {
+        netflink {
+            dimension "default"
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.productFlavors.each { flavor ->
+
+            def flavorData = rootProject.ext[flavor.name]
+            def appName = flavorData.appName
+
+            println("**************************************************")
+            println("-------------" + flavor.name + "." + variant.buildType.name + "." + variant.mergedFlavor.versionName + "-------------")
+
+            if (variant.buildType.name == "debug") {
+                appName = "[Q] " + flavorData.appName
+            } else if (variant.buildType.name == "staging") {
+                appName = "[S] " + flavorData.appName
+            }
+
+            setVariantResValue(variant, appName, APP_NAME, STRING.toLowerCase())
+            setVariantResValue(variant, versionName, VERSION_NAME, STRING.toLowerCase())
+
+            setVariantBuildConfigField(variant, appName, APP_NAME.toUpperCase(), STRING)
+            setVariantBuildConfigField(variant, flavorData.apiHost, API_HOST, STRING)
+            setVariantBuildConfigField(variant, flavorData.apiKey, API_KEY, STRING)
+            setVariantBuildConfigField(variant, flavorData.envName, ENVIRONMENT, STRING)
+            setVariantBuildConfigField(variant, flavorData.configsName, CONFIGS_NAME, STRING)
+            println("**************************************************")
+        }
+
+        variant.outputs.all {
+            outputFileName = "${variant.name}-${variant.versionName}-${variant.versionCode}.apk"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    dataBinding{
+        enabled = true
     }
 }
 
@@ -37,7 +117,23 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    testImplementation 'junit:junit:4.+'
+
+    implementation "com.google.code.gson:gson:2.8.9"
+    implementation "com.squareup.picasso:picasso:2.71828"
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.okhttp3:okhttp:4.7.2"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:4.7.2"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    implementation "androidx.activity:activity-ktx:1.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
+    implementation "io.insert-koin:koin-android:3.1.5"
+
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }

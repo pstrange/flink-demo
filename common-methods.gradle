@@ -1,0 +1,85 @@
+ext {
+    STRING = "String"
+    BOOLEAN = "boolean"
+    INT = "int"
+
+    getVariantFieldValue = { field, buildType, type, key ->
+        def value
+
+        if (field instanceof Map) {
+            if (field["$buildType"] == null) {
+                println("not defined explicit param value for \'${key}\' in \'${buildType}\' configuration. Using first value founded")
+                value = field.entrySet().toList().first().getValue()
+            } else {
+                value = field["$buildType"]
+            }
+        } else {
+            value = field
+        }
+
+        if (value != null) {
+            if (type.toLowerCase().equals("string")) {
+                value = "\"${value}\""
+            } else {
+                value = "${value}"
+            }
+        }
+
+        return value
+    }
+
+    setVariantModeDebugValue = { variant, key, type ->
+        def value = (variant.buildType.name == 'debug' || variant.buildType.name == 'staging')
+        setVariantBuildConfigField(variant, value, key, type)
+    }
+
+    setVariantBuildConfigField = { variant, field, key, type ->
+        def value = getVariantFieldValue(field, variant.buildType.name, type, key)
+
+        if (value != null) {
+            try {
+                variant.buildConfigField(type, key, value)
+                println("BuildConfig -> " + type + ":" + key + " = " + value)
+            } catch (Exception ex) {
+                ex.printStackTrace()
+                println("Null value: BuildConfig -> " + type + ":" + key + " not added!")
+            }
+        } else {
+            println("Null value: BuildConfig -> " + type + ":" + key + " not added!")
+        }
+    }
+
+    setVariantResValue = { variant, field, key, type ->
+        def value = getVariantFieldValue(field, variant.buildType.name, type, key)
+        try {
+            variant.resValue(type, key, value)
+            println("Res -> " + type + ":" + key + " = " + value)
+        } catch (Exception ex) {
+            ex.printStackTrace()
+            println("Null value: Res -> " + type + ":" + key + " = " + value)
+        }
+    }
+
+    setKeystoreSigningProperties = { fileRoute, buildType ->
+        Properties props = new Properties()
+        def propFile = new File(fileRoute)
+        if (propFile.canRead()) {
+            props.load(new FileInputStream(propFile))
+
+            if (props != null &&
+                    props.containsKey('STORE_FILE') &&
+                    props.containsKey('STORE_PASSWORD') &&
+                    props.containsKey('KEY_ALIAS') &&
+                    props.containsKey('KEY_PASSWORD')) {
+                buildType.storeFile = file(props.getProperty('STORE_FILE'))
+                buildType.storePassword = props.getProperty('STORE_PASSWORD')
+                buildType.keyAlias = props.getProperty('KEY_ALIAS')
+                buildType.keyPassword = props.getProperty('KEY_PASSWORD')
+            } else {
+                println 'signing.properties found but some entries are missing'
+            }
+        } else {
+            println 'signing.properties not found'
+        }
+    }
+}
