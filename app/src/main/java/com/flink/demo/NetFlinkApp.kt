@@ -13,10 +13,12 @@ class NetFlinkApp : Application() {
         AppPreferences.init(this@NetFlinkApp)
         startKoin {
             androidContext(this@NetFlinkApp)
-            modules(imagesProcessorModule)
-            modules(networkModule)
-            modules(repositoryModule)
-            modules(viewModelModule)
+            modules(
+                imagesProcessorModule,
+                networkModule,
+                dataBaseModule,
+                repositoryModule,
+                viewModelModule)
         }
     }
 

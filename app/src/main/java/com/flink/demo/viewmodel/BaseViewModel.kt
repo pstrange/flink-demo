@@ -18,7 +18,7 @@ open class BaseViewModel : ViewModel() {
         isLoading.postValue(false)
     }
 
-    fun <T> dispatch(dispatcher: Dispatcher<T>, callback: (response: Response<T>) -> Unit){
+    fun <T> dispatchWeb(dispatcher: WebDispatcher<T>, callback: (response: Response<T>) -> Unit?){
         isLoading.postValue(true)
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = dispatcher.execute()
@@ -35,12 +35,26 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
+    fun dispatchDb(dispatcher: Dispatcher){
+        isLoading.postValue(true)
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            dispatcher.execute()
+            withContext(Dispatchers.Main) {
+                isLoading.postValue(false)
+            }
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         job?.cancel()
     }
 
-    abstract class Dispatcher<T>{
+    abstract class WebDispatcher<T>{
         abstract suspend fun execute() : Response<T>
+    }
+
+    abstract class Dispatcher{
+        abstract suspend fun execute()
     }
 }
