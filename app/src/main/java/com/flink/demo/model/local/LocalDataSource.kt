@@ -5,25 +5,41 @@ import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import com.flink.demo.model.data.response.FavMovie
 import com.flink.demo.model.data.response.Movie
+import com.flink.demo.model.data.response.RateMovie
+import com.flink.demo.model.data.response.TopMovie
 
 @Dao
 interface LocalDataSource {
 
-//    MOVIES
+//  RATE MOVIES
 
     @Insert(onConflict = REPLACE)
-    fun addMovie(movie: Movie)
+    fun addRateMovie(movie: RateMovie)
 
     @Insert(onConflict = REPLACE)
-    fun addMovies(movies: List<Movie>)
+    fun addRateMovies(movies: List<RateMovie>)
 
-    @Query("select * from moviesTable")
-    fun getMovies(): LiveData<List<Movie>>
+    @Query("select * from rateMoviesTable")
+    fun getRateMovies(): LiveData<List<RateMovie>>
 
-    @Query("DELETE FROM moviesTable")
-    fun deleteAllMovies()
+    @Query("DELETE FROM rateMoviesTable")
+    fun deleteAllRateMovies()
 
-//    FAVORITES
+//  TOP MOVIES
+
+    @Insert(onConflict = REPLACE)
+    fun addTopMovie(movie: TopMovie)
+
+    @Insert(onConflict = REPLACE)
+    fun addTopMovies(movies: List<TopMovie>)
+
+    @Query("select * from topMoviesTable")
+    fun getTopMovies(): LiveData<List<TopMovie>>
+
+    @Query("DELETE FROM topMoviesTable")
+    fun deleteAllTopMovies()
+
+//  FAVORITES
 
     @Insert(onConflict = REPLACE)
     fun addFavorite(movie: FavMovie)
@@ -36,4 +52,5 @@ interface LocalDataSource {
 
     @Delete
     fun deleteFavorite(movie: FavMovie)
+
 }

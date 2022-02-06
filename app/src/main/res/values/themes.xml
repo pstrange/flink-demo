@@ -18,4 +18,17 @@
     <style name="WindowAnimationStyle">
         <item name="android:windowEnterAnimation">@android:anim/linear_interpolator</item>
     </style>
+
+    <style name="TextMain">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextMain.Menu">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/red_main</item>
+    </style>
+
 </resources>

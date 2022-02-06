@@ -4,8 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "favoritesTable")
-data class FavMovie(
+@Entity(tableName = "rateMoviesTable")
+data class RateMovie(
     @PrimaryKey(autoGenerate = false)
     var id: Long? = null,
     @Embedded

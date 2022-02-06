@@ -4,16 +4,17 @@ import androidx.lifecycle.MutableLiveData
 import com.flink.demo.BuildConfig
 import com.flink.demo.model.data.response.Movie
 import com.flink.demo.model.data.response.PaginatedResponse
+import com.flink.demo.model.data.response.TopMovie
 import com.flink.demo.model.repository.Repository
 import retrofit2.Response
 
-class HomeViewModel(private val repository: Repository) : BaseViewModel() {
+class TopMoviesViewModel(private val repository: Repository) : BaseViewModel() {
 
-    val movies = MutableLiveData<List<Movie>>()
+    val topMovies = MutableLiveData<List<TopMovie>>()
 
     fun getMovies(){
-        repository.getMovies().value?.let { localMovies ->
-            movies.postValue(localMovies)
+        repository.getTopMovies().value?.let { localMovies ->
+            topMovies.postValue(localMovies)
         }
         dispatchWeb(object: WebDispatcher<PaginatedResponse<Movie>>(){
             override suspend fun execute(): Response<PaginatedResponse<Movie>> {
@@ -23,17 +24,18 @@ class HomeViewModel(private val repository: Repository) : BaseViewModel() {
         { response ->
             val body = response.body()
                 body?.results?.let { list ->
-                    movies.postValue(list)
-                    insertLocalMovies(list)
+                    val topResults = list.map { TopMovie(it.id, it) }
+                    topMovies.postValue(topResults)
+                    insertLocalMovies(topResults)
                 }
         }
     }
 
-    private fun insertLocalMovies(movies: List<Movie>){
+    private fun insertLocalMovies(movies: List<TopMovie>){
         dispatchDb(object : Dispatcher(){
             override suspend fun execute() {
-                repository.deleteAllMovies()
-                repository.addMovies(movies)
+                repository.deleteAllTopMovies()
+                repository.addTopMovies(movies)
             }
         })
     }

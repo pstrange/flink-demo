@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "moviesTable")
 data class Movie(
-    @PrimaryKey(autoGenerate = false)
+    @Ignore
     var id: Long? = null,
     @ColumnInfo(name = "posterPath")
     var poster_path: String? = null,

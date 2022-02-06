@@ -8,13 +8,17 @@ interface Repository {
 
 //    LOCAL
 
-    fun addMovie(movie: Movie)
+    suspend fun addTopMovies(movies: List<TopMovie>)
 
-    suspend fun addMovies(movies: List<Movie>)
+    fun getTopMovies() : LiveData<List<TopMovie>>
 
-    fun getMovies() : LiveData<List<Movie>>
+    suspend fun deleteAllTopMovies()
 
-    suspend fun deleteAllMovies()
+    suspend fun addRateMovies(movies: List<RateMovie>)
+
+    fun getRateMovies() : LiveData<List<RateMovie>>
+
+    suspend fun deleteAllRateMovies()
 
     suspend fun addFavorite(movie: FavMovie)
 

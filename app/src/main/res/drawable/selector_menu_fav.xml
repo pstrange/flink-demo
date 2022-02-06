@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- drawable for selected tab -->
+    <item
+        android:drawable="@drawable/circle_menu_selection"
+        android:state_selected="true">
+    </item>
+
+    <!-- drawable for unselected tab -->
+    <item
+        android:drawable="@drawable/ic_action_favorite"
+        android:state_selected="false"/>
+
+</selector>

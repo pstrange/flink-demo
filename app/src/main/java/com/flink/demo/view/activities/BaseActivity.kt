@@ -1,17 +1,13 @@
 package com.flink.demo.view.activities
 
 import android.os.Bundle
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity<B: ViewDataBinding> : AppCompatActivity() {
 
-    private fun <B> binding(@LayoutRes resId: Int) : Lazy<B> =
-        lazy { DataBindingUtil.setContentView(this, resId) }
-
-    val binding by binding<B>(this.getLayout())
+    lateinit var binding: B
 
     abstract fun getLayout(): Int
     abstract fun initViews(savedInstanceState: Bundle?)
@@ -19,6 +15,7 @@ abstract class BaseActivity<B: ViewDataBinding> : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, getLayout())
         initViews(savedInstanceState)
         initViewModel(savedInstanceState)
     }
