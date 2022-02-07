@@ -39,13 +39,15 @@ class TopMoviesFragment : BaseFragment<FragmentTopMoviesBinding>() {
     }
 
     private val moviesObserver = Observer<List<Movie?>> { movies ->
-        val topCovers = movies.subList(0, 5)
-        val topRest = movies.subList(5, movies.size)
-
         val coverItems = ArrayList<CoverElement>()
-        viewModel.parseHorizontalElement(topCovers, coverItems)
-        viewModel.parseListElements(topRest, coverItems)
-
+        if(movies.size > 5){
+            val topCovers = movies.subList(0, 5)
+            viewModel.parseHorizontalElement(topCovers, coverItems)
+        }
+        if(movies.size > 6){
+            val topRest = movies.subList(5, movies.size)
+            viewModel.parseListElements(topRest, coverItems)
+        }
         binding.adapter = CoverAdapter()
         binding.adapter?.bookmarkChanges?.observe(this, bookmarksObserver)
         binding.adapter?.itemSelector?.observe(this, itemSelectedObserver)

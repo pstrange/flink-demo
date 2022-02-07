@@ -7,12 +7,11 @@ import com.flink.demo.model.repository.Repository
 
 class FavMoviesViewModel(private val repository: Repository) : BaseViewModel() {
 
-    val favMovies = MutableLiveData<List<FavMovie>>()
+    val favMovies = MutableLiveData<List<Movie?>>()
 
     fun getMovies(){
-        repository.getFavorites().value?.let { localMovies ->
-            favMovies.postValue(localMovies)
-        }
+        val favorites = repository.getFavorites().map { it.movie }
+        favMovies.postValue(favorites)
     }
 
     private fun insertFavMovie(movie: Movie){

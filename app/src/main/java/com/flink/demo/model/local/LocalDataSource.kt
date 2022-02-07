@@ -20,7 +20,7 @@ interface LocalDataSource {
     fun addRateMovies(movies: List<RateMovie>)
 
     @Query("select * from rateMoviesTable")
-    fun getRateMovies(): LiveData<List<RateMovie>>
+    fun getRateMovies(): List<RateMovie>
 
     @Query("DELETE FROM rateMoviesTable")
     fun deleteAllRateMovies()
@@ -34,7 +34,7 @@ interface LocalDataSource {
     fun addTopMovies(movies: List<TopMovie>)
 
     @Query("select * from topMoviesTable")
-    fun getTopMovies(): LiveData<List<TopMovie>>
+    fun getTopMovies(): List<TopMovie>
 
     @Query("DELETE FROM topMoviesTable")
     fun deleteAllTopMovies()
@@ -48,7 +48,7 @@ interface LocalDataSource {
     fun getFavoritesIds(): List<Long>
 
     @Query("select * from favoritesTable")
-    fun getFavorites(): LiveData<List<FavMovie>>
+    fun getFavorites(): List<FavMovie>
 
     @Delete
     fun deleteFavorite(movie: FavMovie)

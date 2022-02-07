@@ -10,13 +10,13 @@ interface Repository {
 
     suspend fun addTopMovies(movies: List<TopMovie>)
 
-    fun getTopMovies() : LiveData<List<TopMovie>>
+    fun getTopMovies() : List<TopMovie>
 
     suspend fun deleteAllTopMovies()
 
     suspend fun addRateMovies(movies: List<RateMovie>)
 
-    fun getRateMovies() : LiveData<List<RateMovie>>
+    fun getRateMovies() : List<RateMovie>
 
     suspend fun deleteAllRateMovies()
 
@@ -24,7 +24,7 @@ interface Repository {
 
     fun getFavoritesIds(): List<Long>
 
-    fun getFavorites(): LiveData<List<FavMovie>>
+    fun getFavorites(): List<FavMovie>
 
     suspend fun deleteFavorite(movie: FavMovie)
 

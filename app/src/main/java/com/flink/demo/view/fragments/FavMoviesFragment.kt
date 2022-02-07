@@ -7,6 +7,7 @@ import com.flink.demo.R
 import com.flink.demo.databinding.FragmentFavMoviesBinding
 import com.flink.demo.model.data.response.Error
 import com.flink.demo.model.data.response.FavMovie
+import com.flink.demo.model.data.response.Movie
 import com.flink.demo.viewmodel.FavMoviesViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -28,7 +29,7 @@ class FavMoviesFragment : BaseFragment<FragmentFavMoviesBinding>() {
 //        viewModel.getMovies()
     }
 
-    private val moviesObserver = Observer<List<FavMovie>?> { movies ->
+    private val moviesObserver = Observer<List<Movie?>> { movies ->
 //        binding.textView.text = Gson().toJson(movies)
     }
 
