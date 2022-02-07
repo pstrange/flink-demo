@@ -50,6 +50,6 @@ class CoverItemCardsHolder(binder: ItemCoverCardsTopBinding) :
     }
 
     override fun onItemClick(view: View?, movie: Movie?, position: Int) {
-        itemSelectionLiveData?.postValue(Pair(item!!, position))
+        itemSelectionLiveData?.postValue(Pair(CoverElement(CoverElement.Type.CARDS, movie), position))
     }
 }

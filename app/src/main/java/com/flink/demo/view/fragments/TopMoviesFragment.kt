@@ -9,7 +9,6 @@ import com.flink.demo.R
 import com.flink.demo.databinding.FragmentTopMoviesBinding
 import com.flink.demo.model.data.request.Bookmark
 import com.flink.demo.model.data.request.CoverElement
-import com.flink.demo.model.data.response.Error
 import com.flink.demo.model.data.response.Movie
 import com.flink.demo.view.adapters.covers.CoverAdapter
 import com.flink.demo.view.widgets.OnRecyclerScrollListener
@@ -35,7 +34,7 @@ class TopMoviesFragment : BaseFragment<FragmentTopMoviesBinding>() {
     override fun initViewModel(view: View, savedInstanceState: Bundle?) {
         viewModel.topMovies.observe(this, moviesObserver)
         viewModel.topMoviesPager.observe(this, sectionPagerObserver)
-        viewModel.error.observe(this, errorObserver)
+        viewModel.isLoading.observe(this, loaderObserver)
 
         viewModel.getMovies()
     }
@@ -45,8 +44,8 @@ class TopMoviesFragment : BaseFragment<FragmentTopMoviesBinding>() {
         val topRest = movies.subList(5, movies.size)
 
         val coverItems = ArrayList<CoverElement>()
-        parseHorizontalElement(topCovers, coverItems)
-        parseListElements(topRest, coverItems)
+        viewModel.parseHorizontalElement(topCovers, coverItems)
+        viewModel.parseListElements(topRest, coverItems)
 
         binding.adapter = CoverAdapter()
         binding.adapter?.bookmarkChanges?.observe(this, bookmarksObserver)
@@ -58,7 +57,7 @@ class TopMoviesFragment : BaseFragment<FragmentTopMoviesBinding>() {
 
     private val sectionPagerObserver = Observer<List<Movie?>> { result ->
         val coverItems = ArrayList<CoverElement>()
-        parseListElements(
+        viewModel.parseListElements(
             result,
             coverItems)
         if(!onScrollListener.isFinalPage){
@@ -77,13 +76,20 @@ class TopMoviesFragment : BaseFragment<FragmentTopMoviesBinding>() {
     }
 
     private val itemSelectedObserver = Observer<Pair<CoverElement, Int>> { pair ->
-        val coverItem = pair.first
-        val movie = coverItem.data as Movie
+        val item = pair.first
+        val movie = item.data as Movie
         Log.i("click", "goto next "+movie.title)
     }
 
-    private val errorObserver = Observer<Error> { error ->
-//        binding.textView.text = error.status_message
+    private val loaderObserver = Observer<Boolean> {
+        when {
+            binding.adapter?.showLoader == true -> {
+                binding.adapter?.showLoader = it
+            }
+            binding.swipeRefreshLayout.isRefreshing -> {
+                binding.swipeRefreshLayout.isRefreshing = it
+            }
+        }
     }
 
     private val onScrollListener = object : OnRecyclerScrollListener(){
@@ -92,30 +98,6 @@ class TopMoviesFragment : BaseFragment<FragmentTopMoviesBinding>() {
                 binding.adapter!!.showLoader = true
                 viewModel.getMoviesPage(nextPage)
                 incrementPage()
-            }
-        }
-    }
-
-    private fun parseHorizontalElement(
-        elements: List<Movie?>,
-        items : ArrayList<CoverElement>){
-
-        if(!elements.isNullOrEmpty()){
-            items.add(CoverElement(
-                type = CoverElement.Type.CARDS,
-                data = ArrayList(elements)))
-        }
-    }
-
-    private fun parseListElements(
-        elements: List<Movie?>,
-        items : ArrayList<CoverElement>){
-
-        if(!elements.isNullOrEmpty()){
-            elements.forEach { movie ->
-                items.add(CoverElement(
-                    type = CoverElement.Type.ITEM_POST,
-                    data = movie))
             }
         }
     }

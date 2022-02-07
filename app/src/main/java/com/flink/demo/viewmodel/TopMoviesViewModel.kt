@@ -2,6 +2,7 @@ package com.flink.demo.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.flink.demo.BuildConfig
+import com.flink.demo.model.data.request.CoverElement
 import com.flink.demo.model.data.response.Movie
 import com.flink.demo.model.data.response.PaginatedResponse
 import com.flink.demo.model.data.response.TopMovie
@@ -58,4 +59,31 @@ class TopMoviesViewModel(private val repository: Repository) : BaseViewModel() {
         })
     }
 
+    fun parseHorizontalElement(
+        elements: List<Movie?>,
+        items : ArrayList<CoverElement>){
+
+        if(!elements.isNullOrEmpty()){
+            items.add(
+                CoverElement(
+                type = CoverElement.Type.CARDS,
+                data = ArrayList(elements))
+            )
+        }
+    }
+
+    fun parseListElements(
+        elements: List<Movie?>,
+        items : ArrayList<CoverElement>){
+
+        if(!elements.isNullOrEmpty()){
+            elements.forEach { movie ->
+                items.add(
+                    CoverElement(
+                    type = CoverElement.Type.ITEM_POST,
+                    data = movie)
+                )
+            }
+        }
+    }
 }
