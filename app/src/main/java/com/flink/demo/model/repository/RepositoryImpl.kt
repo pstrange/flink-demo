@@ -26,7 +26,7 @@ class RepositoryImpl(
 
     override suspend fun addFavorite(movie: FavMovie) = local.addFavorite(movie)
 
-    override fun getFavoritesIds(): LiveData<List<Long>> = local.getFavoritesIds()
+    override fun getFavoritesIds(): List<Long> = local.getFavoritesIds()
 
     override fun getFavorites(): LiveData<List<FavMovie>> = local.getFavorites()
 

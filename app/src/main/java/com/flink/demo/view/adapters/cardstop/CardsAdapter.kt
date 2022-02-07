@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.flink.demo.R
 import com.flink.demo.databinding.ItemViewCardBinding
-import com.flink.demo.model.data.request.Bookmark
 import com.flink.demo.model.data.response.Movie
 import com.flink.demo.view.adapters.base.BaseAdapter
 import com.flink.demo.view.adapters.base.BaseViewHolder
@@ -17,7 +16,7 @@ import com.flink.demo.viewmodel.preferences.AppPreferences
 class CardsAdapter : BaseAdapter<Movie, ItemViewCardBinding>(){
 
     var recyclerView : RecyclerView? = null
-    var bookmarkChanges : MutableLiveData<Bookmark>? = null
+    var bookmarkChanges : MutableLiveData<Movie>? = null
     var parentPosition : Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)

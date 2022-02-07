@@ -22,7 +22,7 @@ interface Repository {
 
     suspend fun addFavorite(movie: FavMovie)
 
-    fun getFavoritesIds(): LiveData<List<Long>>
+    fun getFavoritesIds(): List<Long>
 
     fun getFavorites(): LiveData<List<FavMovie>>
 

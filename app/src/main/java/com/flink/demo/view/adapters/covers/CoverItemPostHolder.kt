@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.flink.demo.BuildConfig
 import com.flink.demo.R
 import com.flink.demo.databinding.ItemCoverPostBinding
-import com.flink.demo.model.data.request.Bookmark
 import com.flink.demo.model.data.request.CoverElement
 import com.flink.demo.model.data.response.Movie
 import com.flink.demo.view.adapters.base.BaseViewHolder
@@ -17,27 +16,28 @@ class CoverItemPostHolder(binder: ItemCoverPostBinding)
     : BaseViewHolder<CoverElement, ItemCoverPostBinding>(binder),
     OnRecyclerItemClick<CoverElement> {
 
-    var bookmarkChanges : MutableLiveData<Bookmark>? = null
+    var bookmarkChanges : MutableLiveData<Movie>? = null
     var itemSelectionLiveData : MutableLiveData<Pair<CoverElement, Int>>? = null
 
     override fun onBindViewHolder(item: CoverElement) {
         super.onBindViewHolder(item)
         val movie = item.data as Movie
+        val isBookmarked = AppPreferences.BOOKMAKS.contains(movie.id)
         onItemClick = this
         binder.movie = movie
-        binder.movie!!.isBookmark = AppPreferences.BOOKMAKS.contains(binder.movie!!.id)
+        binder.movie?.isBookmark = isBookmarked
         binder.textDate.text = movie.release_date
         binder.textTitle.text = movie.title
         binder.buttonBookmark.setImageResource(
-            if(binder.movie?.isBookmark == true) R.drawable.ic_action_favorite
+            if(isBookmarked) R.drawable.ic_action_favorite
             else R.drawable.ic_action_favorite_border )
         binder.buttonBookmark.setOnClickListener {
-            binder.movie?.isBookmark = !binder.movie!!.isBookmark
+            val value = !binder.movie?.isBookmark!!
+            binder.movie?.isBookmark = value
             binder.buttonBookmark.setImageResource(
-                if(binder.movie?.isBookmark == true) R.drawable.ic_action_favorite
+                if(value) R.drawable.ic_action_favorite
                 else R.drawable.ic_action_favorite_border )
-            bookmarkChanges?.postValue(Bookmark(
-                index = adapterPosition, movie = binder.movie))
+            bookmarkChanges?.postValue(binder.movie)
         }
         binder.imageThumb.loadImage(BuildConfig.IMAGE_HOST+movie.poster_path, R.drawable.img_thumb)
     }

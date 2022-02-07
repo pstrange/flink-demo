@@ -28,7 +28,7 @@ class CoverAdapter : BaseAdapter<CoverElement, ViewDataBinding>() {
             field = value
         }
 
-    val bookmarkChanges = MutableLiveData<Bookmark>()
+    val bookmarkChanges = MutableLiveData<Movie>()
     val itemSelector = MutableLiveData<Pair<CoverElement, Int>>()
 
     override fun getItemViewType(position: Int): Int {

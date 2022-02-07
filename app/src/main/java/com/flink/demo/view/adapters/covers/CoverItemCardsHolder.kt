@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.flink.demo.databinding.ItemCoverCardsTopBinding
-import com.flink.demo.model.data.request.Bookmark
 import com.flink.demo.model.data.request.CoverElement
 import com.flink.demo.model.data.response.Movie
 import com.flink.demo.view.adapters.base.BaseViewHolder
@@ -18,7 +17,7 @@ class CoverItemCardsHolder(binder: ItemCoverCardsTopBinding) :
     BaseViewHolder<CoverElement, ItemCoverCardsTopBinding>(binder), OnRecyclerItemClick<Movie> {
 
     var itemSelectionLiveData: MutableLiveData<Pair<CoverElement, Int>>? = null
-    var bookmarkChanges : MutableLiveData<Bookmark>? = null
+    var bookmarkChanges : MutableLiveData<Movie>? = null
     var adapter : CardsAdapter? = null
 
     init {

@@ -37,7 +37,7 @@ class AppPreferences {
             get(){
                 val json = preferences.get(BOOKMARKS_KEY, "")
                 if(json.isNullOrEmpty() || json == "null") return ArrayList()
-                val typeArray = object : TypeToken<ArrayList<String>>(){}.type
+                val typeArray = object : TypeToken<ArrayList<Long>>(){}.type
                 return jsonConverter.fromJson(json, typeArray)
             }
             set(value) = preferences.put(BOOKMARKS_KEY, jsonConverter.toJson(value))

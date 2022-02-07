@@ -45,7 +45,7 @@ interface LocalDataSource {
     fun addFavorite(movie: FavMovie)
 
     @Query("select id from favoritesTable")
-    fun getFavoritesIds(): LiveData<List<Long>>
+    fun getFavoritesIds(): List<Long>
 
     @Query("select * from favoritesTable")
     fun getFavorites(): LiveData<List<FavMovie>>

@@ -3,18 +3,41 @@ package com.flink.demo.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.flink.demo.BuildConfig
 import com.flink.demo.model.data.request.CoverElement
+import com.flink.demo.model.data.response.FavMovie
 import com.flink.demo.model.data.response.Movie
 import com.flink.demo.model.data.response.PaginatedResponse
 import com.flink.demo.model.data.response.TopMovie
 import com.flink.demo.model.repository.Repository
+import com.flink.demo.viewmodel.preferences.AppPreferences
 import retrofit2.Response
 
 class TopMoviesViewModel(private val repository: Repository) : BaseViewModel() {
 
-    val bookmarks = MutableLiveData<List<Long>>()
-    val bookmarksResult = MutableLiveData<List<Long>>()
     val topMovies = MutableLiveData<List<Movie?>>()
     val topMoviesPager = MutableLiveData<List<Movie?>>()
+
+    private fun getFavMoviesIds(){
+        val ids = repository.getFavoritesIds()
+        AppPreferences.BOOKMAKS = ids
+    }
+
+    fun insertFavMovies(movie: Movie){
+        dispatchDb(object : Dispatcher(){
+            override suspend fun execute() {
+                repository.addFavorite(FavMovie(movieId = movie.id, movie = movie))
+                getFavMoviesIds()
+            }
+        })
+    }
+
+    fun deleteFavMovies(movie: Movie){
+        dispatchDb(object : Dispatcher(){
+            override suspend fun execute() {
+                repository.deleteFavorite(FavMovie(movieId = movie.id, movie = movie))
+                getFavMoviesIds()
+            }
+        })
+    }
 
     fun getMovies(){
         repository.getTopMovies().value?.let { localMovies ->

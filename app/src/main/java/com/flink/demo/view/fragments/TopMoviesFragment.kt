@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flink.demo.R
 import com.flink.demo.databinding.FragmentTopMoviesBinding
-import com.flink.demo.model.data.request.Bookmark
 import com.flink.demo.model.data.request.CoverElement
 import com.flink.demo.model.data.response.Movie
 import com.flink.demo.view.adapters.covers.CoverAdapter
@@ -50,7 +49,6 @@ class TopMoviesFragment : BaseFragment<FragmentTopMoviesBinding>() {
         binding.adapter = CoverAdapter()
         binding.adapter?.bookmarkChanges?.observe(this, bookmarksObserver)
         binding.adapter?.itemSelector?.observe(this, itemSelectedObserver)
-        viewModel.bookmarks.observe(this, bookmarksChangeObserver)
         binding.adapter?.items = coverItems
         binding.recyclerView.adapter = binding.adapter!!
     }
@@ -67,12 +65,11 @@ class TopMoviesFragment : BaseFragment<FragmentTopMoviesBinding>() {
         }
     }
 
-    private val bookmarksObserver = Observer<Bookmark> {
+    private val bookmarksObserver = Observer<Movie> {
+        val exist = AppPreferences.BOOKMAKS.contains(it.id)
+        if(exist) viewModel.deleteFavMovies(it)
+        else viewModel.insertFavMovies(it)
         binding.adapter?.notifyToVisibleItems()
-    }
-
-    private val bookmarksChangeObserver = Observer<List<Long>> {
-        viewModel.bookmarksResult.postValue(AppPreferences.BOOKMAKS)
     }
 
     private val itemSelectedObserver = Observer<Pair<CoverElement, Int>> { pair ->
