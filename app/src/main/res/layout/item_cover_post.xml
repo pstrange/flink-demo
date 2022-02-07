@@ -37,7 +37,7 @@
             android:layout_marginEnd="@dimen/margin_medium"
             tools:text="Titulo de la noticia muy largo para probar el ellipsize"
             app:layout_constraintStart_toEndOf="@id/image_thumb"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_bookmark"
             app:layout_constraintTop_toTopOf="@id/image_thumb"/>
 
         <TextView
@@ -49,7 +49,7 @@
             tools:text="12 - 04 - 2022"
             app:layout_constraintStart_toEndOf="@id/image_thumb"
             app:layout_constraintEnd_toStartOf="@id/button_bookmark"
-            app:layout_constraintBottom_toBottomOf="@id/image_thumb"/>
+            app:layout_constraintTop_toBottomOf="@id/text_title"/>
 
         <ImageView
             android:id="@+id/button_bookmark"
