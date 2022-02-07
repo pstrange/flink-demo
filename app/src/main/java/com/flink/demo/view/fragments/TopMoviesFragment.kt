@@ -3,7 +3,9 @@ package com.flink.demo.view.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flink.demo.R
 import com.flink.demo.databinding.FragmentTopMoviesBinding
@@ -78,6 +80,10 @@ class TopMoviesFragment : BaseFragment<FragmentTopMoviesBinding>() {
         val item = pair.first
         val movie = item.data as Movie
         Log.i("click", "goto next "+movie.title)
+        val navController = Navigation.findNavController(requireActivity(), R.id.fragment_navigation_container)
+            navController.navigate(R.id.detailActivity, bundleOf(
+                "movie" to movie
+            ))
     }
 
     private val loaderObserver = Observer<Boolean> {

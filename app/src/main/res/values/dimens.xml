@@ -22,4 +22,7 @@
 
     <dimen name="thumb_post_width">60dp</dimen>
     <dimen name="thumb_post_height">80dp</dimen>
+
+    <dimen name="margin_toolbar">50dp</dimen>
+    <dimen name="margin_toolbar_end">30dp</dimen>
 </resources>
