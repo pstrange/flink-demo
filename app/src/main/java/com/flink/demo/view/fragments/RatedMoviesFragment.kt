@@ -8,7 +8,6 @@ import com.flink.demo.databinding.FragmentRatedMoviesBinding
 import com.flink.demo.model.data.response.Error
 import com.flink.demo.model.data.response.RateMovie
 import com.flink.demo.viewmodel.RatedMoviesViewModel
-import com.google.gson.Gson
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -26,14 +25,14 @@ class RatedMoviesFragment : BaseFragment<FragmentRatedMoviesBinding>() {
         viewModel.ratedMovies.observe(this, moviesObserver)
         viewModel.error.observe(this, errorObserver)
 
-        viewModel.getMovies()
+//        viewModel.getMovies()
     }
 
     private val moviesObserver = Observer<List<RateMovie>?> { movies ->
-        binding.textView.text = Gson().toJson(movies)
+//        binding.textView.text = Gson().toJson(movies)
     }
 
     private val errorObserver = Observer<Error> { error ->
-        binding.textView.text = error.status_message
+//        binding.textView.text = error.status_message
     }
 }

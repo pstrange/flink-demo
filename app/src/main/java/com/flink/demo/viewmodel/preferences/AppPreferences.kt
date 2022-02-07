@@ -6,6 +6,7 @@ import com.flink.demo.BuildConfig
 import com.flink.demo.viewmodel.extentions.get
 import com.flink.demo.viewmodel.extentions.put
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class AppPreferences {
 
@@ -16,6 +17,7 @@ class AppPreferences {
 
         private const val AUTH_TOKEN_KEY = "AUTH_TOKEN_KEY"
         private const val SESSION_ID_KEY = "SESSION_ID_KEY"
+        private const val BOOKMARKS_KEY = "BOOKMARKS_KEY"
 
         fun init(ctx: Context) {
             jsonConverter = Gson()
@@ -31,5 +33,13 @@ class AppPreferences {
             get() = preferences.get(SESSION_ID_KEY, "")
             set(value) = preferences.put(SESSION_ID_KEY, value)
 
+        var BOOKMAKS: List<Long>
+            get(){
+                val json = preferences.get(BOOKMARKS_KEY, "")
+                if(json.isNullOrEmpty() || json == "null") return ArrayList()
+                val typeArray = object : TypeToken<ArrayList<String>>(){}.type
+                return jsonConverter.fromJson(json, typeArray)
+            }
+            set(value) = preferences.put(BOOKMARKS_KEY, jsonConverter.toJson(value))
     }
 }

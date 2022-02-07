@@ -1,12 +1,14 @@
 package com.flink.demo.model.remote
 
-import com.flink.demo.model.data.request.CreateSession
 import com.flink.demo.model.data.response.Authentication
 import com.flink.demo.model.data.response.GuestSession
 import com.flink.demo.model.data.response.Movie
 import com.flink.demo.model.data.response.PaginatedResponse
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RemoteDataSource {
 

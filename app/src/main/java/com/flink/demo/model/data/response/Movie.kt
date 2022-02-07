@@ -30,5 +30,7 @@ data class Movie(
     @Ignore
     var production_countries: List<Locale>? = null,
     @Ignore
-    var spoken_languages: List<Locale>? = null
+    var spoken_languages: List<Locale>? = null,
+    @Ignore
+    var isBookmark: Boolean = false,
 )

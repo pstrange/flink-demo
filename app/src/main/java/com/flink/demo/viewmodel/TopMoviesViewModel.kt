@@ -10,11 +10,15 @@ import retrofit2.Response
 
 class TopMoviesViewModel(private val repository: Repository) : BaseViewModel() {
 
-    val topMovies = MutableLiveData<List<TopMovie>>()
+    val bookmarks = MutableLiveData<List<Long>>()
+    val bookmarksResult = MutableLiveData<List<Long>>()
+    val topMovies = MutableLiveData<List<Movie?>>()
+    val topMoviesPager = MutableLiveData<List<Movie?>>()
 
     fun getMovies(){
         repository.getTopMovies().value?.let { localMovies ->
-            topMovies.postValue(localMovies)
+            val savedMovies = localMovies.map { it.movie }
+            topMovies.postValue(savedMovies)
         }
         dispatchWeb(object: WebDispatcher<PaginatedResponse<Movie>>(){
             override suspend fun execute(): Response<PaginatedResponse<Movie>> {
@@ -25,9 +29,23 @@ class TopMoviesViewModel(private val repository: Repository) : BaseViewModel() {
             val body = response.body()
                 body?.results?.let { list ->
                     val topResults = list.map { TopMovie(it.id, it) }
-                    topMovies.postValue(topResults)
+                    topMovies.postValue(list)
                     insertLocalMovies(topResults)
                 }
+        }
+    }
+
+    fun getMoviesPage(page: Int){
+        dispatchWeb(object: WebDispatcher<PaginatedResponse<Movie>>(){
+            override suspend fun execute(): Response<PaginatedResponse<Movie>> {
+                return repository.getPopularMovies(BuildConfig.API_KEY, page)
+            }
+        })
+        { response ->
+            val body = response.body()
+            body?.results?.let { list ->
+                topMoviesPager.postValue(list)
+            }
         }
     }
 
