@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/topMoviesFragment"
+        android:icon="@drawable/selector_menu_top"
+        android:title="@string/menu_top"/>
+
+    <item
+        android:id="@+id/ratedMoviesFragment"
+        android:icon="@drawable/selector_menu_rate"
+        android:title="@string/menu_rate"/>
+
+    <item
+        android:id="@+id/favMoviesFragment"
+        android:icon="@drawable/selector_menu_fav"
+        android:title="@string/menu_fav"/>
+</menu>

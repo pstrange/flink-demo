@@ -8,6 +8,7 @@ plugins {
 def APP_NAME = "app_name"
 def VERSION_NAME = "version_name"
 def API_HOST = "API_HOST"
+def IMAGE_HOST = "IMAGE_HOST"
 def API_KEY = "API_KEY"
 def ENVIRONMENT = "ENVIRONMENT"
 def CONFIGS_NAME = "CONFIGS_NAME"
@@ -86,6 +87,7 @@ android {
 
             setVariantBuildConfigField(variant, appName, APP_NAME.toUpperCase(), STRING)
             setVariantBuildConfigField(variant, flavorData.apiHost, API_HOST, STRING)
+            setVariantBuildConfigField(variant, flavorData.imageHost, IMAGE_HOST, STRING)
             setVariantBuildConfigField(variant, flavorData.apiKey, API_KEY, STRING)
             setVariantBuildConfigField(variant, flavorData.envName, ENVIRONMENT, STRING)
             setVariantBuildConfigField(variant, flavorData.configsName, CONFIGS_NAME, STRING)
@@ -130,8 +132,13 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.4.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.4.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.4.0"
+    implementation "androidx.paging:paging-runtime-ktx:3.1.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation "com.github.mmin18:realtimeblurview:1.2.1"
     implementation "androidx.room:room-runtime:2.4.1"
 
     annotationProcessor "androidx.room:room-compiler:2.4.1"

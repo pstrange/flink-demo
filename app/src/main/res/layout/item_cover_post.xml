@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.flink.demo.model.data.response.Movie" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_trans_to_gray">
+
+        <ImageView
+            android:id="@+id/image_thumb"
+            android:layout_width="@dimen/thumb_post_width"
+            android:layout_height="@dimen/thumb_post_height"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_thumb"
+            android:layout_margin="@dimen/margin_medium"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_title"
+            style="@style/TextMain"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            tools:text="Titulo de la noticia muy largo para probar el ellipsize"
+            app:layout_constraintStart_toEndOf="@id/image_thumb"
+            app:layout_constraintEnd_toStartOf="@id/button_bookmark"
+            app:layout_constraintTop_toTopOf="@id/image_thumb"/>
+
+        <TextView
+            android:id="@+id/text_date"
+            style="@style/TextMain"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_tiny"
+            tools:text="12 - 04 - 2022"
+            app:layout_constraintStart_toEndOf="@id/image_thumb"
+            app:layout_constraintEnd_toStartOf="@id/button_bookmark"
+            app:layout_constraintTop_toBottomOf="@id/text_title"/>
+
+        <ImageView
+            android:id="@+id/button_bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_favorite_border"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_trans_to_gray_circular"
+            android:padding="@dimen/margin_tiny"
+            android:layout_margin="@dimen/margin_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/image_thumb"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

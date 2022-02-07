@@ -1,6 +1,5 @@
 package com.flink.demo.model.repository
 
-import androidx.lifecycle.LiveData
 import com.flink.demo.model.data.response.*
 import com.flink.demo.model.local.LocalDataSource
 import com.flink.demo.model.remote.RemoteDataSource
@@ -12,19 +11,23 @@ class RepositoryImpl(
 
 //    LOCAL
 
-    override fun addMovie(movie: Movie) = local.addMovie(movie)
+    override suspend fun addTopMovies(movies: List<TopMovie>) = local.addTopMovies(movies)
 
-    override suspend fun addMovies(movies: List<Movie>) = local.addMovies(movies)
+    override fun getTopMovies(): List<TopMovie> = local.getTopMovies()
 
-    override fun getMovies(): LiveData<List<Movie>> = local.getMovies()
+    override suspend fun deleteAllTopMovies() = local.deleteAllTopMovies()
 
-    override suspend fun deleteAllMovies() = local.deleteAllMovies()
+    override suspend fun addRateMovies(movies: List<RateMovie>) = local.addRateMovies(movies)
+
+    override fun getRateMovies(): List<RateMovie> = local.getRateMovies()
+
+    override suspend fun deleteAllRateMovies() = local.deleteAllRateMovies()
 
     override suspend fun addFavorite(movie: FavMovie) = local.addFavorite(movie)
 
-    override fun getFavoritesIds(): LiveData<List<Long>> = local.getFavoritesIds()
+    override fun getFavoritesIds(): List<Long> = local.getFavoritesIds()
 
-    override fun getFavorites(): LiveData<List<FavMovie>> = local.getFavorites()
+    override fun getFavorites(): List<FavMovie> = local.getFavorites()
 
     override suspend fun deleteFavorite(movie: FavMovie) = local.deleteFavorite(movie)
 

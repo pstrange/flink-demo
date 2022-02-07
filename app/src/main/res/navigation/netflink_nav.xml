@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/netflink_nav"
+    app:startDestination="@id/topMoviesFragment">
+
+    <fragment
+        android:id="@+id/topMoviesFragment"
+        android:name="com.flink.demo.view.fragments.TopMoviesFragment"
+        android:label="TopMoviesFragment" >
+        <action
+            android:id="@+id/action_topMoviesFragment_to_detailActivity"
+            app:destination="@id/detailActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/ratedMoviesFragment"
+        android:name="com.flink.demo.view.fragments.RatedMoviesFragment"
+        android:label="RatedMoviesFragment" >
+        <action
+            android:id="@+id/action_ratedMoviesFragment_to_detailActivity"
+            app:destination="@id/detailActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/favMoviesFragment"
+        android:name="com.flink.demo.view.fragments.FavMoviesFragment"
+        android:label="FavMoviesFragment" >
+        <action
+            android:id="@+id/action_favMoviesFragment_to_detailActivity"
+            app:destination="@id/detailActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/detailActivity"
+        android:name="com.flink.demo.view.activities.DetailActivity"
+        android:label="DetailActivity" >
+        <argument
+            android:name="movies"
+            app:argType="com.flink.demo.model.data.response.Movie" />
+    </activity>
+</navigation>

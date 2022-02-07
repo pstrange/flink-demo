@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "moviesTable")
 data class Movie(
@@ -28,7 +29,9 @@ data class Movie(
     @Ignore
     var production_companies: List<Company>? = null,
     @Ignore
-    var production_countries: List<Locale>? = null,
+    var genres: List<Locale>? = null,
     @Ignore
-    var spoken_languages: List<Locale>? = null
-)
+    var homepage: String? = null,
+    @Ignore
+    var isBookmark: Boolean = false,
+) : Serializable
