@@ -19,6 +19,9 @@ class AppPreferences {
         private const val SESSION_ID_KEY = "SESSION_ID_KEY"
         private const val BOOKMARKS_KEY = "BOOKMARKS_KEY"
 
+        const val IMAGE_PATH_SMALL = BuildConfig.IMAGE_HOST+"w300/"
+        const val IMAGE_PATH_BIG = BuildConfig.IMAGE_HOST+"w500/"
+
         fun init(ctx: Context) {
             jsonConverter = Gson()
             preferences = ctx.getSharedPreferences(

@@ -1,7 +1,6 @@
 package com.flink.demo.view.adapters.cardstop
 
 import androidx.lifecycle.MutableLiveData
-import com.flink.demo.BuildConfig
 import com.flink.demo.R
 import com.flink.demo.databinding.ItemViewCardBinding
 import com.flink.demo.model.data.response.Movie
@@ -33,7 +32,7 @@ class CardItemHolder(binder: ItemViewCardBinding)
                 else R.drawable.ic_action_favorite_border )
             bookmarkChanges?.postValue(binder.movie)
         }
-        binder.imageThumb.loadImage(BuildConfig.IMAGE_HOST+item.poster_path, R.drawable.img_thumb)
+        binder.imageThumb.loadImage(AppPreferences.IMAGE_PATH_BIG+item.poster_path, R.drawable.img_thumb)
     }
 
 }

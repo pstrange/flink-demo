@@ -2,7 +2,6 @@ package com.flink.demo.view.adapters.covers
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
-import com.flink.demo.BuildConfig
 import com.flink.demo.R
 import com.flink.demo.databinding.ItemCoverPostBinding
 import com.flink.demo.model.data.request.CoverElement
@@ -39,7 +38,7 @@ class CoverItemPostHolder(binder: ItemCoverPostBinding)
                 else R.drawable.ic_action_favorite_border )
             bookmarkChanges?.postValue(binder.movie)
         }
-        binder.imageThumb.loadImage(BuildConfig.IMAGE_HOST+movie.poster_path, R.drawable.img_thumb)
+        binder.imageThumb.loadImage(AppPreferences.IMAGE_PATH_SMALL+movie.poster_path, R.drawable.img_thumb)
     }
 
     override fun onItemClick(view: View?, item: CoverElement?, position: Int) {

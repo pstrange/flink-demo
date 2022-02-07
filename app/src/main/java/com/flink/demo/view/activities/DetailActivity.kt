@@ -1,10 +1,11 @@
 package com.flink.demo.view.activities
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-import com.flink.demo.BuildConfig
 import com.flink.demo.R
 import com.flink.demo.databinding.ActivityDetailBinding
 import com.flink.demo.model.data.response.Movie
@@ -12,12 +13,10 @@ import com.flink.demo.viewmodel.DetailViewModel
 import com.flink.demo.viewmodel.extentions.convertOffsetToPercent
 import com.flink.demo.viewmodel.extentions.loadImage
 import com.flink.demo.viewmodel.extentions.toDp
+import com.flink.demo.viewmodel.preferences.AppPreferences
 import com.google.android.material.appbar.AppBarLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.lang.StringBuilder
-import android.content.Intent
-import android.net.Uri
 
 
 class DetailActivity : BaseActivity<ActivityDetailBinding>(), AppBarLayout.OnOffsetChangedListener {
@@ -39,7 +38,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), AppBarLayout.OnOff
 
         val movie = intent.getSerializableExtra("movie") as Movie
         binding.movie = movie
-        binding.toolbarImage.loadImage(BuildConfig.IMAGE_HOST+movie.poster_path, R.drawable.img_thumb)
+        binding.toolbarImage.loadImage(AppPreferences.IMAGE_PATH_BIG+movie.poster_path, R.drawable.img_thumb)
         binding.textTitleAutoscroll.text = movie.title
         binding.textTitleTop.text = movie.title
         binding.textDate.text = movie.release_date
