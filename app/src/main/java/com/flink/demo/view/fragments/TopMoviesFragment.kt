@@ -52,7 +52,7 @@ class TopMoviesFragment : BaseFragment<FragmentTopMoviesBinding>() {
         binding.adapter?.bookmarkChanges?.observe(this, bookmarksObserver)
         binding.adapter?.itemSelector?.observe(this, itemSelectedObserver)
         binding.adapter?.items = coverItems
-        binding.recyclerView.adapter = binding.adapter!!
+        binding.recyclerView.adapter = binding.adapter
     }
 
     private val sectionPagerObserver = Observer<List<Movie?>> { result ->
