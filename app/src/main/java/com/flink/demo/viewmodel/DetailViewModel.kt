@@ -8,13 +8,11 @@ import retrofit2.Response
 
 class DetailViewModel(private val repository: Repository) : BaseViewModel() {
 
-    val movie = MutableLiveData<Movie>()
+    val movie = MutableLiveData<Movie?>()
 
     fun getMovie(movieId: String){
         dispatchWeb(object: WebDispatcher<Movie>(){
             override suspend fun execute(): Response<Movie> {
-//                val savedMovies = repository.getRateMovies().map { it.movie }
-//                    rateMovies.postValue(savedMovies)
                 return repository.getMovieDetail(movieId, BuildConfig.API_KEY)
             }
         })

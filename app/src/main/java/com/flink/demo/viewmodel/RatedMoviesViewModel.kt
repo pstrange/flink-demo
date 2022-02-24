@@ -39,8 +39,8 @@ class RatedMoviesViewModel(private val repository: Repository) : BaseViewModel()
     fun getMovies(){
         dispatchWeb(object: WebDispatcher<PaginatedResponse<Movie>>(){
             override suspend fun execute(): Response<PaginatedResponse<Movie>> {
-//                val savedMovies = repository.getRateMovies().map { it.movie }
-//                    rateMovies.postValue(savedMovies)
+                val savedMovies = repository.getRateMovies().map { it.movie }
+                    rateMovies.postValue(savedMovies)
                 return repository.getTopRatedMovies(BuildConfig.API_KEY, 1)
             }
         })

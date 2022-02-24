@@ -92,7 +92,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(), AppBarLayout.OnOff
         return verticalOffset.convertOffsetToPercent(scrollRange, verticalOffset, skipValue)
     }
 
-    private val movieObserver = Observer<Movie> { movie ->
+    private val movieObserver = Observer<Movie?> { movie ->
         val companies = StringBuilder()
         movie.production_companies?.forEach { company ->
             companies.append("${company.name}\n")

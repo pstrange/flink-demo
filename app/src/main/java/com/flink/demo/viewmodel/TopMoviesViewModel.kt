@@ -42,8 +42,8 @@ class TopMoviesViewModel(private val repository: Repository) : BaseViewModel() {
     fun getMovies(){
         dispatchWeb(object: WebDispatcher<PaginatedResponse<Movie>>(){
             override suspend fun execute(): Response<PaginatedResponse<Movie>> {
-//                val savedMovies = repository.getTopMovies().map { it.movie }
-//                    topMovies.postValue(savedMovies)
+                val savedMovies = repository.getTopMovies().map { it.movie }
+                    topMovies.postValue(savedMovies)
                 return repository.getPopularMovies(BuildConfig.API_KEY, 1)
             }
         })
